@@ -8,6 +8,7 @@
     <title>Hello World!</title>
 
     <script defer src="./src/renderers/preload.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 
 <body>
@@ -16,9 +17,17 @@
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
 
+    <div class="job1-holder">
 
-    <button id="btn">start job</button>
-    <span id="loading">NOT loading...</span>
+        <input id="origin" placeholder="origin..." type="text">
+        <input id="evaluatedSelector" placeholder="evaluatedSelector..." type="text">
+        <input id="folderName" placeholder="folderName..." type="text">
+        <input id="urlListName" placeholder="urlListName..." type="text">
+
+        <button id="btn">start job</button>
+        <span id="loading">NOT loading...</span>
+    </div>
+
 </body>
 
 </html>

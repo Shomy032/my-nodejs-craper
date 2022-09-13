@@ -18,7 +18,6 @@ async function extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folde
         waitUntil: 'networkidle2'
     });
 
-    // await page.exposeFunction("parseElementFn", parseElementFn);
     const imageList = await page.evaluate((evaluatedSelector) => {
         var holders = document.querySelectorAll(evaluatedSelector);
 
