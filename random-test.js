@@ -1,8 +1,4 @@
-class ScraperHelper {
-    getNewFileLocation() {
-        return `./scraped-data/results-${Date.now()}.json`
-    }
-}
+
 
 const options1 = {
     method: 'GET',

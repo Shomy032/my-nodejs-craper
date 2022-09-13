@@ -6,6 +6,8 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>Hello World!</title>
+
+    <script defer src="./src/renderers/preload.js"></script>
 </head>
 
 <body>
@@ -13,6 +15,10 @@
     We are using Node.js <span id="node-version"></span>,
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
+
+
+    <button id="btn">start job</button>
+    <span id="loading">NOT loading...</span>
 </body>
 
 </html>
