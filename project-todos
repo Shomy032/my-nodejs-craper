@@ -1,0 +1,20 @@
+1. add db connection 
+
+2. implement storing and recieving data
+
+3. add helper class for DB
+
+4. refactor existing helper classes
+
+5. make full folder structure and docs for int
+
+6 . bundling job files 
+
+7 . full outsorce current job
+
+8 . make new job for dota 2
+
+9. add loading and time in ui after job start ( logging )
+
+10 . make more renderers and outsorce curent form main
+
