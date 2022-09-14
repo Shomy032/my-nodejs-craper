@@ -38,9 +38,14 @@ async function extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folde
     fsHelper.writeToFile(JSON.stringify(finalList))
     const fileNamesList = [];
     finalList.forEach(async fileUrl => {
-        const name = fileUrl.split("/").reverse()[0];
-        fileNamesList.push(name)
-        await fsHelper.downloadFile(fileUrl, `${folderName}/${name}`)
+        const fileName = fileUrl.split("/").reverse()[0];
+        fileNamesList.push(fileName)
+        try {
+            await fsHelper.downloadFile(fileUrl, fileName)
+        } catch (err) {
+            console.log(err)
+        }
+
     })
 
     await browser.close();

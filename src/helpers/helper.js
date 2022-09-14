@@ -1,5 +1,6 @@
 const Https = require("https");
 const fs = require('fs');
+const { promisify } = require('util')
 
 class ScraperHelper {
     getNewFileLocation() {
@@ -24,6 +25,7 @@ class FsHelper {
         });
     }
 
+    /* DOCS */
     writeArrayToDisc(arr, name) {
         var file = fs.createWriteStream(`extracted-data/${Date.now()}-${name}.txt`);
         file.on('error', (err) => { console.error(err); });
@@ -33,10 +35,26 @@ class FsHelper {
         file.end();
     }
 
+    /* DOCS */
+    makeDirIfNotExist(dirName) {
+        if (!fs.existsSync(dirName)) {
+            fs.mkdirSync(dirName);
+        }
+    }
+
+    /* DOCS */
+    forceDeleteDir(dirName) {
+        if (fs.existsSync(dirName)) {
+            fs.rmSync(dirName, { recursive: true, force: true });
+        }
+    }
+
     // todo refactor
     async downloadFile(url, targetFile) {
         return await new Promise((resolve, reject) => {
-            Https.get(url, response => {
+
+            // currently https is not sending request 'ECONNREFUSED'
+            Https.get((url, response) => {
                 const code = response.statusCode ?? 0
 
                 if (code >= 400) {
@@ -49,8 +67,7 @@ class FsHelper {
                 }
 
                 // save the file to disk
-                const fileWriter = fs
-                    .createWriteStream(targetFile)
+                const fileWriter = fs.createWriteStream(`tmp-data/extracted-pictures/${targetFile}`)
                     .on('finish', () => {
                         resolve({})
                     })
@@ -61,6 +78,11 @@ class FsHelper {
             })
         })
     }
+
+    asyncCreateWriteStream() {
+        return promisify(fs.createWriteStream)
+    }
 }
+
 
 module.exports = { ScraperHelper, FsHelper }

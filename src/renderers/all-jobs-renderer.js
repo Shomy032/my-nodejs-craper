@@ -21,7 +21,7 @@ btn.addEventListener("click", async () => {
     // example of valid data
     const origin = 'https://www.dota2.com/heroes';
     const evaluatedSelector = ".herogridpage_HeroIcon_7szOn";
-    const folderName = `extracted-pictures`;
+    const folderName = `tmp-data/extracted-pictures`;
     const urlListName = "hero-images";
 
     // const origin = input_origin.value;
@@ -48,14 +48,18 @@ function updateJobState(text) {
 }
 
 function showImagesInUI(holderSelector, namesList) {
-    const holder = document.querySelector(holderSelector);
-    let nodes = namesList.map(name => {
-        let imgNode = document.createElement('img');
-        imgNode.src = `./extracted-pictures/${name}`;
-        imgNode.classList.add("small-img");
-        return imgNode;
-    });
 
-    holder.append(...nodes);
+    setTimeout(() => {
+        const holder = document.querySelector(holderSelector);
+        let nodes = namesList.map(name => {
+            let imgNode = document.createElement('img');
+            imgNode.src = `./tmp-data/extracted-pictures/${name}`;
+            imgNode.classList.add("small-img");
+            return imgNode;
+        });
+        holder.append(...nodes);
+    }, 5000)
+
+
 }
 
