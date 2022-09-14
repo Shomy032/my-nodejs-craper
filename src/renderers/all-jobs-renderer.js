@@ -11,7 +11,6 @@ updateJobState("not started")
 
 
 window.ipcRenderer.on("job-failed", (event, message) => {
-    // console.log('message', message)
     updateJobState(message);
 })
 
@@ -20,19 +19,20 @@ btn.addEventListener("click", async () => {
     btn.disabled = true
 
     // example of valid data
-    // const origin = 'https://www.dota2.com/heroes';
-    // const evaluatedSelector = ".herogridpage_HeroIcon_7szOn";
-    // const folderName = `extracted-pictures`;
-    // const urlListName = "hero-images";
+    const origin = 'https://www.dota2.com/heroes';
+    const evaluatedSelector = ".herogridpage_HeroIcon_7szOn";
+    const folderName = `extracted-pictures`;
+    const urlListName = "hero-images";
 
-    const origin = input_origin.value;
-    const evaluatedSelector = input_evaluatedSelector.value || "div";
-    const folderName = input_folderName.value || "default-folder-name";
-    const urlListName = input_urlListName.value || "default-list-name";
+    // const origin = input_origin.value;
+    // const evaluatedSelector = input_evaluatedSelector.value || "div";
+    // const folderName = input_folderName.value || "default-folder-name";
+    // const urlListName = input_urlListName.value || "default-list-name";
 
     try {
         updateJobState("started")
-        await window.electronAPI.extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
+        const names = await window.electronAPI.extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
+        showImagesInUI('#allImages', names)
         loading.innerText = "NOT loading..."
         btn.disabled = false
         updateJobState("done")
@@ -46,3 +46,16 @@ function updateJobState(text) {
     const results = document.getElementById("results");
     results.innerText = text
 }
+
+function showImagesInUI(holderSelector, namesList) {
+    const holder = document.querySelector(holderSelector);
+    let nodes = namesList.map(name => {
+        let imgNode = document.createElement('img');
+        imgNode.src = `./extracted-pictures/${name}`;
+        imgNode.classList.add("small-img");
+        return imgNode;
+    });
+
+    holder.append(...nodes);
+}
+

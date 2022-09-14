@@ -12,3 +12,10 @@
 .job-holder button {
     margin: 0.3rem 0;
 }
+
+.small-img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 0.1rem;
+}

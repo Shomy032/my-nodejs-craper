@@ -32,14 +32,20 @@ async function extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folde
     }, evaluatedSelector)
 
     const finalList = imageList.map(el => parseElementFn(el));
+
+    // todo make our own properties for file locations
     fsHelper.writeArrayToDisc(finalList, urlListName)
     fsHelper.writeToFile(JSON.stringify(finalList))
+    const fileNamesList = [];
     finalList.forEach(async fileUrl => {
         const name = fileUrl.split("/").reverse()[0];
+        fileNamesList.push(name)
         await fsHelper.downloadFile(fileUrl, `${folderName}/${name}`)
     })
 
     await browser.close();
+
+    return fileNamesList;
 }
 
 module.exports = { extractParseAndReadBgImgUrlAll }
