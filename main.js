@@ -12,6 +12,30 @@ const createWindow = () => {
         }
     })
 
+    win.loadFile('index.html')
+    win.webContents.openDevTools()
+
+    return win;
+}
+
+
+app.whenReady().then(() => {
+
+    const win = createWindow();
+    registerListeners(win)
+
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') app.quit()
+    })
+
+})
+
+function registerListeners(win) {
     ipcMain.on("set-title", async (event, title) => {
         // console.log("title", title)
     })
@@ -23,21 +47,4 @@ const createWindow = () => {
             win.webContents.send('job-failed', err.originalMessage)
         }
     })
-
-    win.loadFile('index.html')
-    win.webContents.openDevTools()
 }
-
-
-app.whenReady().then(() => {
-    createWindow()
-
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
-
-    app.on('window-all-closed', () => {
-        if (process.platform !== 'darwin') app.quit()
-    })
-
-})
