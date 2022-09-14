@@ -74,7 +74,7 @@ function registerListeners(win) {
         }
     })
 
-    ipcMain.handle("getAllVideoUrlsFromPage", async (event, { origin }) => {
+    ipcMain.handle("getAllVideoUrlsFromPage", async (event, origin) => {
         try {
             return await getAllVideoUrlsFromPage({ origin })
         } catch (err) {
