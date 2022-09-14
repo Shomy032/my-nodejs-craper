@@ -7,6 +7,14 @@ const input_folderName = document.getElementById("folderName")
 const input_urlListName = document.getElementById("urlListName")
 window.electronAPI.setTitle("Renderer 1")
 
+updateJobState("not started")
+
+
+window.ipcRenderer.on("job-failed", (event, message) => {
+    console.log('message', message)
+    updateJobState(message);
+})
+
 btn.addEventListener("click", async () => {
     loading.innerText = "loading..."
     btn.disabled = true
@@ -22,7 +30,19 @@ btn.addEventListener("click", async () => {
     const folderName = input_folderName.value || "default-folder-name";
     const urlListName = input_urlListName.value || "default-list-name";
 
-    await window.electronAPI.extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
-    loading.innerText = "NOT loading..."
-    btn.disabled = false
+    try {
+        updateJobState("started")
+        await window.electronAPI.extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
+        loading.innerText = "NOT loading..."
+        btn.disabled = false
+        updateJobState("done")
+    } catch (err) {
+        updateJobState("job failed")
+    }
+
 })
+
+function updateJobState(text) {
+    const results = document.getElementById("results");
+    results.innerText = text
+}

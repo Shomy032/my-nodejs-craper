@@ -12,19 +12,22 @@ const createWindow = () => {
         }
     })
 
-    // connection test listenr
     ipcMain.on("set-title", async (event, title) => {
-        console.log("title", title)
+        // console.log("title", title)
     })
 
     ipcMain.handle("extractParseAndReadBgImgUrlAll", async (event, { origin, evaluatedSelector, folderName, urlListName }) => {
-        console.log('api calss')
-        return await extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
+        try {
+            return await extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
+        } catch (err) {
+            win.webContents.send('job-failed', err.originalMessage)
+        }
     })
 
     win.loadFile('index.html')
     win.webContents.openDevTools()
 }
+
 
 app.whenReady().then(() => {
     createWindow()
