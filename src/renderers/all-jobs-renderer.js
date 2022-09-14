@@ -11,7 +11,7 @@ updateJobState("not started")
 
 
 window.ipcRenderer.on("job-failed", (event, message) => {
-    console.log('message', message)
+    // console.log('message', message)
     updateJobState(message);
 })
 
