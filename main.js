@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const { extractParseAndReadBgImgUrlAll, getAllVideoUrlsFromPage } = require("./src/helpers/get-all-heroes-pictures")
+const { extractParseAndReadBgImgUrlAll, getAllVideoUrlsFromPage } = require("./src/helpers/extracting-data-helper")
 const path = require('path')
 const { ScraperHelper, FsHelper } = require("./src/helpers/helper");
 const helper = new ScraperHelper();
