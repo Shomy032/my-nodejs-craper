@@ -2,6 +2,13 @@
     color: red;
 }
 
-.job1-holder {
+.job-holder {
     margin: 2rem;
+}
+
+.job-holder input,
+.job-holder div,
+.job-holder span,
+.job-holder button {
+    margin: 0.3rem 0;
 }

@@ -1,5 +1,5 @@
-const { app, BrowserWindow } = require('electron')
-
+const { app, BrowserWindow, ipcMain } = require('electron')
+const { extractParseAndReadBgImgUrlAll } = require("./src/helpers/get-all-heroes-pictures")
 const path = require('path')
 
 const createWindow = () => {
@@ -8,8 +8,18 @@ const createWindow = () => {
         height: 700,
         webPreferences: {
             nodeIntegration: true,
-            preload: path.join(__dirname, 'src/renderers/preload.js')
+            preload: path.join(__dirname, 'src/preload/preload.js')
         }
+    })
+
+    // connection test listenr
+    ipcMain.on("set-title", async (event, title) => {
+        console.log("title", title)
+    })
+
+    ipcMain.handle("extractParseAndReadBgImgUrlAll", async (event, { origin, evaluatedSelector, folderName, urlListName }) => {
+        console.log('api calss')
+        return await extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folderName, urlListName })
     })
 
     win.loadFile('index.html')
@@ -26,4 +36,5 @@ app.whenReady().then(() => {
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') app.quit()
     })
+
 })
