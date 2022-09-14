@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const { extractParseAndReadBgImgUrlAll } = require("./src/helpers/get-all-heroes-pictures")
+const { extractParseAndReadBgImgUrlAll, getAllVideoUrlsFromPage } = require("./src/helpers/get-all-heroes-pictures")
 const path = require('path')
 const { ScraperHelper, FsHelper } = require("./src/helpers/helper");
 const helper = new ScraperHelper();
@@ -73,4 +73,13 @@ function registerListeners(win) {
             win.webContents.send('job-failed', err.originalMessage)
         }
     })
+
+    ipcMain.handle("getAllVideoUrlsFromPage", async (event, { origin }) => {
+        try {
+            return await getAllVideoUrlsFromPage({ origin })
+        } catch (err) {
+            win.webContents.send('job-failed', err.originalMessage)
+        }
+    })
+
 }

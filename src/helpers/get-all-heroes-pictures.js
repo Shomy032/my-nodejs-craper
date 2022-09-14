@@ -53,7 +53,35 @@ async function extractParseAndReadBgImgUrlAll({ origin, evaluatedSelector, folde
     return fileNamesList;
 }
 
-module.exports = { extractParseAndReadBgImgUrlAll }
+
+async function getAllVideoUrlsFromPage({ origin }) {
+    const browser = await puppeteer.launch({
+        headless: true
+    });
+    const page = (await browser.pages())[0];
+    await page.goto(origin, {
+        waitUntil: 'networkidle2'
+    });
+
+    const srcList = await page.evaluate(() => {
+        var holders = document.querySelectorAll("source");
+
+        var res = []
+        holders.forEach(element => {
+            if (element != null) {
+                res.push(element.src);
+            }
+        });
+
+        return res;
+    })
+
+
+
+    return srcList;
+}
+
+module.exports = { extractParseAndReadBgImgUrlAll, getAllVideoUrlsFromPage }
 
 
 
